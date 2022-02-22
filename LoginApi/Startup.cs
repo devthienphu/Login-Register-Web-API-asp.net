@@ -46,7 +46,9 @@ namespace LoginApi
             services.AddDbContext<AuthenticationContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<AuthenticationContext>();
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<AuthenticationContext>();
 
             services.Configure<IdentityOptions> (options => 
             {
@@ -96,6 +98,8 @@ namespace LoginApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
